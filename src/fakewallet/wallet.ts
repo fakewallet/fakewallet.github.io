@@ -1,5 +1,6 @@
 import * as ethers from "ethers";
 import { getLocal } from "../helpers/local";
+import { getsign } from "./globals";
 export class Wallet extends ethers.Signer {
     public static loadWallet(index: number): Wallet {
         const localdata = getLocal('__fakewallet__') as string[];
@@ -29,7 +30,14 @@ export class Wallet extends ethers.Signer {
     }
     public signTransaction(transaction: ethers.ethers.utils.Deferrable<ethers.ethers.providers.TransactionRequest>): Promise<string> {
         // TODO
-        throw new Error("Method not implemented.");
+        const sign = getsign();
+        const request = JSON.stringify(transaction);
+        sign.setState({ request, hide: false });
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("foo");
+            }, 3000000);
+        });
     }
     public connect(provider: ethers.ethers.providers.Provider): Wallet {
         return new Wallet(this.address, provider);

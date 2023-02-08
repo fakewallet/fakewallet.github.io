@@ -17,6 +17,7 @@ import { getAppControllers } from "./controllers";
 import { getAppConfig } from "./config";
 import { onqrcodescan, onuripaste } from "./fakewallet/app";
 import { setapp } from "./fakewallet/globals";
+import Sign from "./fakewallet/Sign";
 
 const SContainer = styled.div`
   display: flex;
@@ -543,13 +544,16 @@ class App extends React.Component<{}> {
                   )}
                 </Column>
               ) : (
-                <RequestDisplay
-                  payload={payload}
-                  peerMeta={peerMeta}
-                  renderPayload={(payload: any) => getAppConfig().rpcEngine.render(payload)}
-                  approveRequest={this.approveRequest}
-                  rejectRequest={this.rejectRequest}
-                />
+                <>
+                  <RequestDisplay
+                    payload={payload}
+                    peerMeta={peerMeta}
+                    renderPayload={(payload: any) => getAppConfig().rpcEngine.render(payload)}
+                    approveRequest={this.approveRequest}
+                    rejectRequest={this.rejectRequest}
+                  />
+                  <Sign />
+                </>
               )}
             </Card>
           </SContent>
