@@ -2,7 +2,7 @@ import * as ethers from "ethers";
 import { signTypedData_v4 } from "eth-sig-util";
 import { getChainData } from "../helpers/utilities";
 import { setLocal, getLocal } from "../helpers/local";
-import { Wallet } from "../impersonate/wallet";
+import { Wallet } from "../fakewallet/wallet";
 import {
   ENTROPY_KEY,
   MNEMONIC_KEY,
