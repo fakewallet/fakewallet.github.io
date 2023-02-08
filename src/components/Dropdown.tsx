@@ -84,7 +84,7 @@ class Dropdown extends React.Component<IDropdownProps, IDropdownState> {
   }
 
   public componentDidUpdate(prevProps: IDropdownProps) {
-    if (prevProps.selected !== this.props.selected) {
+    if (prevProps.selected !== this.props.selected || Array.isArray(prevProps.options) && Array.isArray(this.props.options) && prevProps.options.length !== this.props.options.length) {
       const { otherKeys, optionsDict } = this.parseKeys(this.props);
       this.setState({ otherKeys, optionsDict });
     }
@@ -143,7 +143,7 @@ class Dropdown extends React.Component<IDropdownProps, IDropdownState> {
       <ClickOutside onClickOutside={this.onClickOutside}>
         <SDropdown monospace={!!monospace} disabled={disabled || !otherKeys.length}>
           <SRow selected={true} show={show} onClick={this.toggleDropdown}>
-            {optionsDict[selected][displayKey]}
+            {(optionsDict[selected] ?? {})[displayKey]}
           </SRow>
           {!!otherKeys.length && (
             <SAbsolute show={show}>
