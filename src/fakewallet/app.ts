@@ -20,9 +20,10 @@ export async function onuripaste(app: App, data: any): Promise<boolean> {
             await app.initWalletConnect();
             return true;
         case ethers.utils.isAddress(uri):
+            const accounts = app.state.accounts.concat([uri]);
             // TODO
             app.setState({
-                accounts: [uri].concat(app.state.accounts),
+                accounts,
                 address: uri,
             });
             console.log('address');
