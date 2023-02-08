@@ -16,6 +16,7 @@ import { getCachedSession } from "./helpers/utilities";
 import { getAppControllers } from "./controllers";
 import { getAppConfig } from "./config";
 import { onqrcodescan, onuripaste } from "./fakewallet/app";
+import Sign from "./fakewallet/Sign";
 import { setapp } from "./fakewallet/globals";
 
 const SContainer = styled.div`
@@ -389,7 +390,7 @@ class App extends React.Component<{}> {
 
   public onURIPaste = async (e: any) => {
     const data = e.target.value;
-    e.target.value = '';
+    e.target.value = "";
     await onuripaste(data);
   };
 
@@ -543,13 +544,16 @@ class App extends React.Component<{}> {
                   )}
                 </Column>
               ) : (
-                <RequestDisplay
-                  payload={payload}
-                  peerMeta={peerMeta}
-                  renderPayload={(payload: any) => getAppConfig().rpcEngine.render(payload)}
-                  approveRequest={this.approveRequest}
-                  rejectRequest={this.rejectRequest}
-                />
+                <>
+                  <RequestDisplay
+                    payload={payload}
+                    peerMeta={peerMeta}
+                    renderPayload={(payload: any) => getAppConfig().rpcEngine.render(payload)}
+                    approveRequest={this.approveRequest}
+                    rejectRequest={this.rejectRequest}
+                  />
+                  <Sign />
+                </>
               )}
             </Card>
           </SContent>

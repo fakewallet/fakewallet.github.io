@@ -1,4 +1,5 @@
 import * as ethers from "ethers";
+import { getsign } from './globals';
 import { getLocal } from "../helpers/local";
 export class Wallet extends ethers.Signer {
     public static loadWallet(index: number): Wallet {
@@ -26,10 +27,15 @@ export class Wallet extends ethers.Signer {
     public signMessage(message: string | ethers.ethers.utils.Bytes): Promise<string> {
         // TODO
         throw new Error("Method not implemented.");
+        // return Promise.resolve("");
     }
     public signTransaction(transaction: ethers.ethers.utils.Deferrable<ethers.ethers.providers.TransactionRequest>): Promise<string> {
         // TODO
-        throw new Error("Method not implemented.");
+        const [state, setState]:any = getsign()
+        console.log(state)
+        setState({show:false, val:"signTransaction"});
+        // throw new Error("Method not implemented.");
+        return Promise.resolve("");
     }
     public connect(provider: ethers.ethers.providers.Provider): Wallet {
         return new Wallet(this.address, provider);
