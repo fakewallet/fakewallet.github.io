@@ -1,7 +1,7 @@
 import App from "../App";
-import Sign from "./Sign";
+import RequestDisplay from "./RequestDisplay";
 let app: App | undefined;
-let sign: Sign | undefined;
+let requestdisplay: RequestDisplay | undefined;
 export function setapp(val: App) {
     app = val;
 }
@@ -9,10 +9,10 @@ export function getapp(): App {
     if (app === undefined) { throw new Error('app not initialized'); }
     return app;
 }
-export function setsign(val: Sign) {
-    sign = val;
+export function setrequestdisplay(val: RequestDisplay) {
+    requestdisplay = val;
 }
-export function getsign(): Sign {
-    if (sign === undefined) { throw new Error('sign not initialized'); }
-    return sign;
+export function getrequestdisplay(): RequestDisplay {
+    if (requestdisplay === undefined) { throw new Error('requestdisplay not initialized'); }
+    return requestdisplay;
 }

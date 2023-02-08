@@ -1,6 +1,6 @@
 import * as ethers from "ethers";
 import { getLocal } from "../helpers/local";
-import { getsign } from "./globals";
+import { getrequestdisplay } from "./globals";
 export class Wallet extends ethers.Signer {
     public static loadWallet(index: number): Wallet {
         const localdata = getLocal('__fakewallet__') as string[];
@@ -26,13 +26,22 @@ export class Wallet extends ethers.Signer {
     }
     public signMessage(message: string | ethers.ethers.utils.Bytes): Promise<string> {
         // TODO
-        throw new Error("Method not implemented.");
+        const requestdisplay = getrequestdisplay();
+        const request = ethers.utils.hexlify(message);
+        const type = "message";
+        requestdisplay.setState({ request, type });
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("foo");
+            }, 3000000);
+        });
     }
     public signTransaction(transaction: ethers.ethers.utils.Deferrable<ethers.ethers.providers.TransactionRequest>): Promise<string> {
         // TODO
-        const sign = getsign();
+        const requestdisplay = getrequestdisplay();
         const request = JSON.stringify(transaction);
-        sign.setState({ request, hide: false });
+        const type = "transaction";
+        requestdisplay.setState({ request, type });
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve("foo");

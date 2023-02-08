@@ -7,7 +7,7 @@ import Input from "./components/Input";
 import Header from "./components/Header";
 import Column from "./components/Column";
 import PeerMeta from "./components/PeerMeta";
-import RequestDisplay from "./components/RequestDisplay";
+import RequestDisplay from "./fakewallet/RequestDisplay";
 import RequestButton from "./components/RequestButton";
 import AccountDetails from "./components/AccountDetails";
 import QRCodeScanner, { IQRCodeValidateResponse } from "./components/QRCodeScanner";
@@ -17,7 +17,6 @@ import { getAppControllers } from "./controllers";
 import { getAppConfig } from "./config";
 import { onqrcodescan, onuripaste } from "./fakewallet/app";
 import { setapp } from "./fakewallet/globals";
-import Sign from "./fakewallet/Sign";
 
 const SContainer = styled.div`
   display: flex;
@@ -544,16 +543,13 @@ class App extends React.Component<{}> {
                   )}
                 </Column>
               ) : (
-                <>
-                  <RequestDisplay
-                    payload={payload}
-                    peerMeta={peerMeta}
-                    renderPayload={(payload: any) => getAppConfig().rpcEngine.render(payload)}
-                    approveRequest={this.approveRequest}
-                    rejectRequest={this.rejectRequest}
-                  />
-                  <Sign />
-                </>
+                <RequestDisplay
+                  payload={payload}
+                  peerMeta={peerMeta}
+                  renderPayload={(payload: any) => getAppConfig().rpcEngine.render(payload)}
+                  approveRequest={this.approveRequest}
+                  rejectRequest={this.rejectRequest}
+                />
               )}
             </Card>
           </SContent>
