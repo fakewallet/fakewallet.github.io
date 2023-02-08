@@ -143,7 +143,7 @@ class Dropdown extends React.Component<IDropdownProps, IDropdownState> {
       <ClickOutside onClickOutside={this.onClickOutside}>
         <SDropdown monospace={!!monospace} disabled={disabled || !otherKeys.length}>
           <SRow selected={true} show={show} onClick={this.toggleDropdown}>
-            {optionsDict[selected][displayKey]}
+            {(optionsDict[selected] ?? {})[displayKey]}
           </SRow>
           {!!otherKeys.length && (
             <SAbsolute show={show}>

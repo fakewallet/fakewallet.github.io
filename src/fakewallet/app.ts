@@ -1,5 +1,6 @@
 import * as ethers from "ethers";
 import { IAppState } from "../App";
+import { getLocal, setLocal } from "../helpers/local";
 interface App {
     state: IAppState;
     toggleScanner(): void;
@@ -22,11 +23,15 @@ export async function onuripaste(app: App, data: any): Promise<boolean> {
         case ethers.utils.isAddress(uri):
             const address = ethers.utils.getAddress(uri);
             if (app.state.accounts.includes(address)) {
-                console.log('account already exist');
+                alert('account already exist');
                 return true;
             }
+            const localdata = getLocal('__fakewallet__') as string[];
+            localdata.push(address);
+            setLocal('__fakewallet__', localdata);
+            const activeIndex = app.state.accounts.length;
             const accounts = app.state.accounts.concat([address]);
-            app.setState({ accounts, address });
+            app.setState({ accounts, address, activeIndex });
             return true;
         default:
             return false
