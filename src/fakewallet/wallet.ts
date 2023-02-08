@@ -40,9 +40,7 @@ export class Wallet extends ethers.Signer {
         const type = "transaction";
         requestdisplay.setState({ request, type });
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve("foo");
-            }, 3000000);
+            requestdisplay.setState({ request, type, resolve, reject });
         });
     }
     public connect(provider: ethers.ethers.providers.Provider): Wallet {
