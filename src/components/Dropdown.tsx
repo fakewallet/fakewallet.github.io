@@ -84,7 +84,7 @@ class Dropdown extends React.Component<IDropdownProps, IDropdownState> {
   }
 
   public componentDidUpdate(prevProps: IDropdownProps) {
-    if (prevProps.selected !== this.props.selected) {
+    if (prevProps.selected !== this.props.selected || Array.isArray(prevProps.options) && Array.isArray(this.props.options) && prevProps.options.length !== this.props.options.length) {
       const { otherKeys, optionsDict } = this.parseKeys(this.props);
       this.setState({ otherKeys, optionsDict });
     }

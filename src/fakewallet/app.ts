@@ -3,17 +3,19 @@ import { getLocal, setLocal } from "../helpers/local";
 import { getapp } from "./globals";
 export async function onqrcodescan(data: any) {
     const ok = await updateaccounts(data);
-    if (ok) {
+    if (ok !== undefined) {
         const app = getapp();
         app.toggleScanner();
     }
+    if (ok) { alert('account imported'); }
 }
 export async function onuripaste(e: any) {
     const data = e.target.value;
     e.target.value = '';
-    await updateaccounts(data);
+    const ok = await updateaccounts(data);
+    if (ok) { alert('account imported'); }
 }
-export async function updateaccounts(data: any): Promise<boolean> {
+export async function updateaccounts(data: any): Promise<boolean | undefined> {
     const app = getapp();
     const uri = typeof data === "string" ? data : "";
     switch (true) {
@@ -21,14 +23,14 @@ export async function updateaccounts(data: any): Promise<boolean> {
             {
                 await app.setState({ uri });
                 await app.initWalletConnect();
-                return true;
+                return false;
             }
         case ethers.utils.isAddress(uri):
             {
                 const address = ethers.utils.getAddress(uri);
                 if (app.state.accounts.includes(address)) {
                     alert('account already exist');
-                    return true;
+                    return false;
                 }
                 const localdata = getLocal('__fakewallet__') as string[];
                 localdata.push(address);
@@ -43,7 +45,7 @@ export async function updateaccounts(data: any): Promise<boolean> {
                 const address = ethers.utils.getAddress(uri.slice(9));
                 if (app.state.accounts.includes(address)) {
                     alert('account already exist');
-                    return true;
+                    return false;
                 }
                 const localdata = getLocal('__fakewallet__') as string[];
                 localdata.push(address);
@@ -54,7 +56,7 @@ export async function updateaccounts(data: any): Promise<boolean> {
                 return true;
             }
         default:
-            return false
+            return undefined;
     }
 }
 
