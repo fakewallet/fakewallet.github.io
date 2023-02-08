@@ -1,11 +1,16 @@
 import * as ethers from "ethers";
-export async function onqrcodescan(app: any, data: any) {
+interface App {
+    toggleScanner(): void;
+    setState(data: any): void;
+    initWalletConnect(): void;
+}
+export async function onqrcodescan(app: App, data: any) {
     const ok = await onuripaste(app, data);
     if (ok) {
         app.toggleScanner();
     }
 }
-export async function onuripaste(app: any, data: any): Promise<boolean> {
+export async function onuripaste(app: App, data: any): Promise<boolean> {
     const uri = typeof data === "string" ? data : "";
     switch (true) {
         case uri.startsWith('wc:'):
