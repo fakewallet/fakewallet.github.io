@@ -1,13 +1,15 @@
 import * as ethers from "ethers";
-import App from "../App";
 import { getLocal, setLocal } from "../helpers/local";
-export async function onqrcodescan(app: App, data: any) {
-    const ok = await onuripaste(app, data);
+import { getapp } from "./globals";
+export async function onqrcodescan(data: any) {
+    const ok = await onuripaste(data);
     if (ok) {
+        const app = getapp();
         app.toggleScanner();
     }
 }
-export async function onuripaste(app: App, data: any): Promise<boolean> {
+export async function onuripaste(data: any): Promise<boolean> {
+    const app = getapp();
     const uri = typeof data === "string" ? data : "";
     switch (true) {
         case uri.startsWith('wc:'):

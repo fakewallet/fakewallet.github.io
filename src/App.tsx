@@ -16,6 +16,7 @@ import { getCachedSession } from "./helpers/utilities";
 import { getAppControllers } from "./controllers";
 import { getAppConfig } from "./config";
 import { onqrcodescan, onuripaste } from "./fakewallet/app";
+import { setapp } from "./fakewallet/globals";
 
 const SContainer = styled.div`
   display: flex;
@@ -163,6 +164,7 @@ class App extends React.Component<{}> {
     };
   }
   public componentDidMount() {
+    setapp(this);
     this.init();
   }
 
@@ -382,11 +384,11 @@ class App extends React.Component<{}> {
   };
 
   public onQRCodeScan = async (data: any) => {
-    await onqrcodescan(this, data);
+    await onqrcodescan(data);
   };
 
   public onURIPaste = async (e: any) => {
-    await onuripaste(this, e.target.value);
+    await onuripaste(e.target.value);
   };
 
   public onQRCodeError = (error: Error) => {
