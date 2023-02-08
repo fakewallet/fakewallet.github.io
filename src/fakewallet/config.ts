@@ -6,7 +6,7 @@ export function loadconfig(def: IAppConfig): IAppConfig {
     if (localdata && localdata.length) {
         def.numberOfAccounts = localdata.length;
     } else {
-        setLocal('__fakewallet__', [defaddr])
+        setLocal('__fakewallet__', [defaddr]);
         def.numberOfAccounts = 0;
     }
     return def;
