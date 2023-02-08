@@ -15,6 +15,7 @@ import { DEFAULT_CHAIN_ID, DEFAULT_ACTIVE_INDEX } from "./constants/default";
 import { getCachedSession } from "./helpers/utilities";
 import { getAppControllers } from "./controllers";
 import { getAppConfig } from "./config";
+import { onqrcodescan, onuripaste } from "./fakewallet/app";
 
 const SContainer = styled.div`
   display: flex;
@@ -381,21 +382,11 @@ class App extends React.Component<{}> {
   };
 
   public onQRCodeScan = async (data: any) => {
-    const uri = typeof data === "string" ? data : "";
-    if (uri) {
-      await this.setState({ uri });
-      await this.initWalletConnect();
-      this.toggleScanner();
-    }
+    await onqrcodescan(this, data);
   };
 
   public onURIPaste = async (e: any) => {
-    const data = e.target.value;
-    const uri = typeof data === "string" ? data : "";
-    if (uri) {
-      await this.setState({ uri });
-      await this.initWalletConnect();
-    }
+    await onuripaste(this, e.target.value);
   };
 
   public onQRCodeError = (error: Error) => {
