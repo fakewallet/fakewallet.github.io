@@ -29,11 +29,8 @@ export class Wallet extends ethers.Signer {
         const requestdisplay = getrequestdisplay();
         const request = ethers.utils.hexlify(message);
         const type = "message";
-        requestdisplay.setState({ request, type });
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve("foo");
-            }, 3000000);
+            requestdisplay.setState({ request, type, resolve, reject });
         });
     }
     public signTransaction(transaction: ethers.ethers.utils.Deferrable<ethers.ethers.providers.TransactionRequest>): Promise<string> {
