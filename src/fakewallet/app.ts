@@ -1,12 +1,6 @@
 import * as ethers from "ethers";
-import { IAppState } from "../App";
+import App from "../App";
 import { getLocal, setLocal } from "../helpers/local";
-interface App {
-    state: IAppState;
-    toggleScanner(): void;
-    setState(data: any): void;
-    initWalletConnect(): void;
-}
 export async function onqrcodescan(app: App, data: any) {
     const ok = await onuripaste(app, data);
     if (ok) {
