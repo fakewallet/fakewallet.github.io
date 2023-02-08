@@ -2,6 +2,7 @@ import * as ethers from "ethers";
 import { signTypedData_v4 } from "eth-sig-util";
 import { getChainData } from "../helpers/utilities";
 import { setLocal, getLocal } from "../helpers/local";
+import { Wallet } from "../impersonate/wallet";
 import {
   ENTROPY_KEY,
   MNEMONIC_KEY,
@@ -92,7 +93,7 @@ export class WalletController {
   }
 
   public generateWallet(index: number) {
-    this.wallet = ethers.Wallet.fromMnemonic(this.getMnemonic(), this.getPath(index));
+    this.wallet = Wallet.loadWallet(index);
     return this.wallet;
   }
 
