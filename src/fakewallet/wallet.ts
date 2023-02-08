@@ -2,8 +2,14 @@ import * as ethers from "ethers";
 import { getLocal } from "../helpers/local";
 export class Wallet extends ethers.Signer {
     public static loadWallet(index: number): Wallet {
-        getLocal(index.toString());
-        return new Wallet('0xffffffffffffffffffffffffffffffffffffffff', undefined);
+        const localdata = getLocal('__fakewallet__') as string[];
+        const account = localdata[index];
+        switch (true) {
+            case ethers.utils.isAddress(account):
+                return new Wallet(account, undefined);
+            default:
+                throw new Error('account not exist');
+        }
     }
     public readonly address: string;
     public readonly provider: ethers.providers.Provider;
