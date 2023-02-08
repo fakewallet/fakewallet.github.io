@@ -1,5 +1,7 @@
 import * as ethers from "ethers";
+import { IAppState } from "../App";
 interface App {
+    state: IAppState;
     toggleScanner(): void;
     setState(data: any): void;
     initWalletConnect(): void;
@@ -19,6 +21,10 @@ export async function onuripaste(app: App, data: any): Promise<boolean> {
             return true;
         case ethers.utils.isAddress(uri):
             // TODO
+            app.setState({
+                accounts: [uri].concat(app.state.accounts),
+                address: uri,
+            });
             console.log('address');
             return false
         default:
