@@ -2,6 +2,7 @@ import walletconnectLogo from "./assets/walletconnect-logo.png";
 import { SUPPORTED_CHAINS, MAINNET_CHAIN_ID, ETH_STANDARD_PATH } from "../constants";
 import { IAppConfig } from "../helpers/types";
 import { getRpcEngine } from "../engines";
+import { loadconfig } from "src/fakewallet/config";
 
 const appConfig: IAppConfig = {
   name: "WalletConnect",
@@ -26,5 +27,5 @@ const appConfig: IAppConfig = {
 };
 
 export function getAppConfig(): IAppConfig {
-  return appConfig;
+  return loadconfig(appConfig);
 }
