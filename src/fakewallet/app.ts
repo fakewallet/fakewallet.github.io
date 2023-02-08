@@ -20,14 +20,14 @@ export async function onuripaste(app: App, data: any): Promise<boolean> {
             await app.initWalletConnect();
             return true;
         case ethers.utils.isAddress(uri):
-            const accounts = app.state.accounts.concat([uri]);
-            // TODO
-            app.setState({
-                accounts,
-                address: uri,
-            });
-            console.log('address');
-            return false
+            const address = ethers.utils.getAddress(uri);
+            if (app.state.accounts.includes(address)) {
+                console.log('account already exist');
+                return true;
+            }
+            const accounts = app.state.accounts.concat([address]);
+            app.setState({ accounts, address });
+            return true;
         default:
             return false
     }
