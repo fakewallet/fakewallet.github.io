@@ -388,7 +388,9 @@ class App extends React.Component<{}> {
   };
 
   public onURIPaste = async (e: any) => {
-    await onuripaste(e.target.value);
+    const data = e.target.value;
+    e.target.value = '';
+    await onuripaste(data);
   };
 
   public onQRCodeError = (error: Error) => {
