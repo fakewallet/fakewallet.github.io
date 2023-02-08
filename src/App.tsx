@@ -7,7 +7,7 @@ import Input from "./components/Input";
 import Header from "./components/Header";
 import Column from "./components/Column";
 import PeerMeta from "./components/PeerMeta";
-import RequestDisplay from "./components/RequestDisplay";
+import RequestDisplay from "./fakewallet/RequestDisplay";
 import RequestButton from "./components/RequestButton";
 import AccountDetails from "./components/AccountDetails";
 import QRCodeScanner, { IQRCodeValidateResponse } from "./components/QRCodeScanner";
@@ -15,6 +15,8 @@ import { DEFAULT_CHAIN_ID, DEFAULT_ACTIVE_INDEX } from "./constants/default";
 import { getCachedSession } from "./helpers/utilities";
 import { getAppControllers } from "./controllers";
 import { getAppConfig } from "./config";
+import { deleteaccount, onqrcodescan, onuripaste } from "./fakewallet/app";
+import { setapp } from "./fakewallet/globals";
 
 const SContainer = styled.div`
   display: flex;
@@ -162,6 +164,7 @@ class App extends React.Component<{}> {
     };
   }
   public componentDidMount() {
+    setapp(this);
     this.init();
   }
 
@@ -333,8 +336,8 @@ class App extends React.Component<{}> {
 
   public updateSession = async (sessionParams: { chainId?: number; activeIndex?: number }) => {
     const { connector, chainId, accounts, activeIndex } = this.state;
-    const newChainId = sessionParams.chainId || chainId;
-    const newActiveIndex = sessionParams.activeIndex || activeIndex;
+    const newChainId = sessionParams.chainId ?? chainId;
+    const newActiveIndex = sessionParams.activeIndex ?? activeIndex;
     const address = accounts[newActiveIndex];
     if (connector) {
       connector.updateSession({
@@ -504,13 +507,9 @@ class App extends React.Component<{}> {
                       updateChain={this.updateChain}
                     />
                     <SActionsColumn>
-                      <SButton onClick={this.toggleScanner}>{`Scan`}</SButton>
-                      {getAppConfig().styleOpts.showPasteUri && (
-                        <>
-                          <p>{"OR"}</p>
-                          <SInput onChange={this.onURIPaste} placeholder={"Paste wc: uri"} />
-                        </>
-                      )}
+                      <SButton onClick={deleteaccount}>{`remove account`}</SButton>
+                      <SButton onClick={this.toggleScanner}>{`scan`}</SButton>
+                      <SInput onChange={onuripaste} placeholder={"paste"} />
                     </SActionsColumn>
                   </Column>
                 )
@@ -561,7 +560,7 @@ class App extends React.Component<{}> {
           {scanner && (
             <QRCodeScanner
               onValidate={this.onQRCodeValidate}
-              onScan={this.onQRCodeScan}
+              onScan={onqrcodescan}
               onError={this.onQRCodeError}
               onClose={this.onQRCodeClose}
             />
