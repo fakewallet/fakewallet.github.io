@@ -82,6 +82,8 @@ const SActionsColumn = styled(SActions as any)`
 const SButton = styled(Button)`
   width: 50%;
   height: 40px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 `;
 
 const SInput = styled(Input)`

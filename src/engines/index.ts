@@ -1,6 +1,6 @@
 import { IRpcEngine } from "../helpers/types";
 import { IAppState } from "../App";
-import ethereum from "./ethereum";
+import ethereum from "../fakewallet/ethereum";
 
 class RpcEngine implements IRpcEngine {
   public engines: IRpcEngine[];
